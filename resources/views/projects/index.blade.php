@@ -38,7 +38,9 @@
                                                 {{ $project->id }}
                                             </td>
                                             <td class="px-6 py-4 text-sm leading-5 dark:bg-gray-800 text-gray-900 dark:text-gray-200 whitespace-nowrap">
-                                                {{ str($project->name)->limit(72, '...') }}
+                                                <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('projects.show', $project) }}">
+                                                    {{ str($project->name)->limit(72, '...') }}
+                                                </a>
                                             </td>
                                             <td class="dark:bg-gray-800 whitespace-nowrap">
                                                 <div class="mx-2 flex gap-2 justify-end">
