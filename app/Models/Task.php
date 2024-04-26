@@ -10,6 +10,7 @@ class Task extends Model
 {
     protected $fillable = [
         'name',
+        'description',
     ];
 
     protected static function booted(): void

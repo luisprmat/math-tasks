@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Project extends Model
 {
@@ -23,5 +24,10 @@ class Project extends Model
         static::addGlobalScope('project_team_id', function (Builder $builder) use ($currentTeamId) {
             $builder->where('team_id', $currentTeamId);
         });
+    }
+
+    public function tasks(): HasMany
+    {
+        return $this->hasMany(Task::class);
     }
 }
