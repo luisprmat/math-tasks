@@ -19,7 +19,7 @@
                         <x-section-border space="2" />
                         @foreach ($project->tasks as $task)
                             <h3 class="text-gray-700 font-semibold dark:text-gray-200">{{ $task->name }}</h3>
-                            <div class="w-full mt-2 p-2 border rounded-md border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 overflow-hidden prose dark:prose-invert">{!! $task->description !!}</div>
+                            <div wire:ignore class="w-full mt-2 p-2 border rounded-md border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 overflow-hidden prose dark:prose-invert">{!! $task->description !!}</div>
                             <x-section-border space="2" />
                         @endforeach
                     @else
@@ -36,9 +36,9 @@
                         </div>
                     </div>
 
-                    <p class="mt-4 text-gray-500 dark:text-gray-400 leading-relaxed">
+                    {{-- <p class="mt-4 text-gray-500 dark:text-gray-400 leading-relaxed">
                         Laravel Jetstream provides a beautiful interface.
-                    </p>
+                    </p> --}}
                 </div>
             </div>
         </div>
@@ -85,10 +85,18 @@
             </x-button>
         </x-slot>
     </x-dialog-modal>
-</div>
 
-@script
-<script>
-console.log('Hola')
-</script>
-@endscript
+    @push('headScripts')
+        <script>
+            MathJax = {
+                tex: {
+                    inlineMath: [['$', '$'], ['\\(', '\\)']]
+                }
+            };
+        </script>
+        <script id="MathJax-script" async
+            type="text/javascript"
+            src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+        </script>
+    @endpush
+</div>
