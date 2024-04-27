@@ -16,6 +16,8 @@ class ProjectTasks extends Component
 
     public bool $openEditTaskModal = false;
 
+    public bool $openDeleteTaskModal = false;
+
     public TaskForm $form;
 
     public Task $task;
@@ -50,6 +52,15 @@ class ProjectTasks extends Component
         $this->openEditTaskModal = true;
     }
 
+    public function openTaskDeleteForm(Task $task)
+    {
+        $this->setTask($task);
+
+        $this->dispatch('delete-task');
+
+        $this->openDeleteTaskModal = true;
+    }
+
     public function store()
     {
         $this->validate();
@@ -70,6 +81,13 @@ class ProjectTasks extends Component
         $this->resetForm();
 
         $this->openEditTaskModal = false;
+    }
+
+    public function destroy()
+    {
+        $this->task->delete();
+
+        $this->openDeleteTaskModal = false;
     }
 
     private function resetForm(): void
