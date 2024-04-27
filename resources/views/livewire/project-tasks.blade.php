@@ -65,8 +65,8 @@
 
         <x-slot name="content">
             <div class="mt-4" x-data="{}" x-on:create-task.window="setTimeout(() => $refs.taskName.focus(), 250)">
-                <x-label for="name" :value="__('Name')" />
-                <x-input type="text" id="name" class="mt-1 block w-full"
+                <x-label for="name-create" :value="__('Name')" />
+                <x-input type="text" id="name-create" class="mt-1 block w-full"
                             autocomplete="username"
                             x-ref="taskName"
                             wire:model="form.name" />
@@ -107,8 +107,8 @@
 
         <x-slot name="content">
             <div class="mt-4" x-data="{}" x-on:edit-task.window="setTimeout(() => $refs.taskName.focus(), 250)">
-                <x-label for="name" :value="__('Name')" />
-                <x-input type="text" id="name" class="mt-1 block w-full"
+                <x-label for="name-edit" :value="__('Name')" />
+                <x-input type="text" id="name-edit" class="mt-1 block w-full"
                             autocomplete="username"
                             x-ref="taskName"
                             wire:model="form.name" />
