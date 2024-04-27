@@ -2,29 +2,37 @@
 
 namespace App\Livewire;
 
+use App\Livewire\Forms\TaskForm;
 use App\Models\Project;
+use App\Models\Task;
 use Livewire\Attributes\Layout;
-use Livewire\Attributes\Validate;
 use Livewire\Component;
 
 class ProjectTasks extends Component
 {
     public Project $project;
 
-    /**
-     * Indicates if a modal to create Task is open.
-     *
-     * @var bool
-     */
-    public $openCreateTaskModal = false;
+    public bool $openCreateTaskModal = false;
 
-    #[Validate(['required', 'min:3'])]
-    public $name = '';
+    public bool $openEditTaskModal = false;
 
-    #[Validate(['required', 'min:3'])]
-    public $description = '';
+    public TaskForm $form;
 
-    public function openTaskForm()
+    public Task $task;
+
+    public function mount(Project $project)
+    {
+        $this->project = $project;
+    }
+
+    public function setTask(Task $task)
+    {
+        $this->task = $task;
+
+        $this->form->setTask($task);
+    }
+
+    public function openTaskCreateForm()
     {
         $this->resetForm();
 
@@ -33,32 +41,44 @@ class ProjectTasks extends Component
         $this->openCreateTaskModal = true;
     }
 
-    public function createTask()
+    public function openTaskEditForm(Task $task)
+    {
+        $this->setTask($task);
+
+        $this->dispatch('edit-task');
+
+        $this->openEditTaskModal = true;
+    }
+
+    public function store()
     {
         $this->validate();
 
-        $this->project->tasks()->create([
-            'name' => $this->name,
-            'description' => $this->description,
-        ]);
+        $this->project->tasks()->create($this->form->all());
 
         $this->resetForm();
 
         $this->openCreateTaskModal = false;
     }
 
-    public function mount(Project $project)
+    public function update()
     {
-        $this->project = $project;
+        $this->validate();
+
+        $this->task->update($this->form->all());
+
+        $this->resetForm();
+
+        $this->openEditTaskModal = false;
     }
 
     private function resetForm(): void
     {
         $this->resetErrorBag();
 
-        $this->name = '';
+        $this->reset('task');
 
-        $this->description = '';
+        $this->form->reset();
     }
 
     #[Layout('layouts.app')]
