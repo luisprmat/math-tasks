@@ -74,16 +74,38 @@
                 <x-input-error for="form.name" class="mt-2" />
             </div>
 
-            <div x-data="{ desc: @entangle('form.description') }">
+            <div x-data="{
+                desc: @entangle('form.description'),
+                typeset: (code) => {
+                    let promise = Promise.resolve()
+                    promise = promise
+                        .then(() => MathJax.typesetPromise(code()))
+                        .catch(e => console.log('Typeset failed: ' + e.message))
+                    return promise
+                }
+            }" x-init="await typeset(() => {
+                            const mathjx = document.getElementById('preview-'+$id('create-task'))
+                            mathjx.innerHTML = desc
+                            return [mathjx]
+            })" x-id="['create-task']">
                 <div class="mt-4">
-                    <x-label for="description" :value="__('Description')" />
-                    <x-textarea id="description" class="mt-1 block w-full" x-model="desc"></x-textarea>
+                    <x-label x-bind:for="'description-'+$id('create-task')" :value="__('Description')" />
+                    <x-textarea x-bind:id="'description-'+$id('create-task')"
+                        class="mt-1 block w-full"
+                        x-model="desc"
+                        x-on:keyup="await typeset(() => {
+                            const mathjx = document.getElementById('preview-'+$id('create-task'))
+                            mathjx.innerHTML = desc
+                            return [mathjx]
+                        })"
+                        rows="5"
+                    ></x-textarea>
                     <x-input-error for="form.description" class="mt-2" />
                 </div>
 
                 <div class="mt-4">
-                    <x-label for="preview" value="{{ __('Preview') }}" />
-                    <div id="preview" class="w-full mt-2 p-2 border rounded-md border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 overflow-hidden prose dark:prose-invert" x-html="desc"></div>
+                    <x-label-disabled value="{{ __('Preview') }}" />
+                    <div wire:ignore x-bind:id="'preview-'+$id('create-task')" class="w-full mt-2 p-2 border rounded-md border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 overflow-hidden prose dark:prose-invert"></div>
                 </div>
             </div>
         </x-slot>
@@ -116,16 +138,38 @@
                 <x-input-error for="form.name" class="mt-2" />
             </div>
 
-            <div x-data="{ desc: @entangle('form.description') }">
+            <div x-data="{
+                desc: @entangle('form.description'),
+                typeset: (code) => {
+                    let promise = Promise.resolve()
+                    promise = promise
+                        .then(() => MathJax.typesetPromise(code()))
+                        .catch(e => console.log('Typeset failed: ' + e.message))
+                    return promise
+                }
+            }" x-init="await typeset(() => {
+                            const mathjx = document.getElementById('preview-'+$id('edit-task'))
+                            mathjx.innerHTML = desc
+                            return [mathjx]
+            })" x-id="['edit-task']">
                 <div class="mt-4">
-                    <x-label for="description" :value="__('Description')" />
-                    <x-textarea id="description" class="mt-1 block w-full" x-model="desc"></x-textarea>
+                    <x-label x-bind:for="'description-'+$id('edit-task')" :value="__('Description')" />
+                    <x-textarea x-bind:id="'description-'+$id('edit-task')"
+                        class="mt-1 block w-full"
+                        x-model="desc"
+                        x-on:keyup="await typeset(() => {
+                            const mathjx = document.getElementById('preview-'+$id('edit-task'))
+                            mathjx.innerHTML = desc
+                            return [mathjx]
+                        })"
+                        rows="5"
+                    ></x-textarea>
                     <x-input-error for="form.description" class="mt-2" />
                 </div>
 
                 <div class="mt-4">
-                    <x-label for="preview" value="{{ __('Preview') }}" />
-                    <div wire:ignore id="preview" class="w-full mt-2 p-2 border rounded-md border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 overflow-hidden prose dark:prose-invert" x-html="desc"></div>
+                    <x-label-disabled value="{{ __('Preview') }}" />
+                    <div wire:ignore x-bind:id="'preview-'+$id('edit-task')" class="w-full mt-2 p-2 border rounded-md border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 overflow-hidden prose dark:prose-invert"></div>
                 </div>
             </div>
         </x-slot>
