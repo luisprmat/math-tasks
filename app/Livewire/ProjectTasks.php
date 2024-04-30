@@ -70,6 +70,8 @@ class ProjectTasks extends Component
         $this->resetForm();
 
         $this->openCreateTaskModal = false;
+
+        $this->redirectRoute('projects.show', $this->project);
     }
 
     public function update()
@@ -81,6 +83,8 @@ class ProjectTasks extends Component
         $this->resetForm();
 
         $this->openEditTaskModal = false;
+
+        $this->redirectRoute('projects.show', $this->project);
     }
 
     public function destroy()
@@ -88,6 +92,8 @@ class ProjectTasks extends Component
         $this->task->delete();
 
         $this->openDeleteTaskModal = false;
+
+        $this->redirectRoute('projects.show', $this->project);
     }
 
     private function resetForm(): void

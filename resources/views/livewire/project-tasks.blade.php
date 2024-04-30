@@ -151,6 +151,10 @@
                             const mathjx = document.getElementById('preview-'+$id('edit-task'))
                             mathjx.innerHTML = desc
                             return [mathjx]
+            })" x-on:edit-task.window="await typeset(() => {
+                            const mathjx = document.getElementById('preview-'+$id('edit-task'))
+                            mathjx.innerHTML = desc
+                            return [mathjx]
             })" x-id="['edit-task']">
                 <div class="mt-4">
                     <x-label x-bind:for="'description-'+$id('edit-task')" :value="__('Description')" />
