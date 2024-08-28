@@ -49,6 +49,8 @@ class ProjectTasks extends Component
 
         $this->dispatch('edit-task');
 
+        $this->resetErrorBag();
+
         $this->openEditTaskModal = true;
     }
 
